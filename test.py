@@ -1,20 +1,63 @@
-N, M =  list(map(int, input().split()))
-no_listens_or_sees = [] # (듣도 못한 사람) or (보도 못한 사람) 중복을 허용하여 모두 추가
-no_listens_and_sees = [] # (듣도)와 (보도) 둘 다 중복되는 사람을 추가
+class Node():
+    node_number = None
+    parent_node = None 
+    children_list = []
 
-for i in range(N + M):
-    no_listens_or_sees.append(input())# 일단 중복을 허용하여 다 추가
+    def __init__(self, node_number):
+        self.node_number = node_number
 
-no_listens_or_sees.sort() # 정렬
+    def set_parent_node(self,
+                 parent_node):
+        self.parent_node = parent_node
 
-i = 0
-while(i < len(no_listens_or_sees) - 1):
-    if no_listens_or_sees[i] == no_listens_or_sees[i + 1]:
-        no_listens_and_sees.append(no_listens_or_sees[i]) # 중복되는 원소를 발견했을 때는 no_listens_and_sees에 추가 하고
-        i = i + 2 # 인덱스는 + 2
+    def set_children_list(self,
+                 children_list):
+        self.children_list = children_list
+
+def find_children(linked_list, parent):
+    children_list = []
+    del_list = []
+
+    linked_index = 0
+    while(linked_index < len(linked_list)):
+        if parent == linked_list[linked_index][0]:
+            children_list.append(linked_list[linked_index][1])   
+            del linked_list[linked_index]
+        elif parent == linked_list[linked_index][1]:
+            children_list.append(linked_list[linked_index][1]) 
+            del linked_list[linked_index]
+        else:
+            linked_index += 1
+    return linked_list, children_list
+
+def set_node(linked_list, now_node, parent_node):
+    node_classes[now_node].set_parent_node(parent_node)
+
+    linked_list, children_list = find_children(linked_list, now_node)
+    node_classes[now_node].set_children_list(children_list)
+
+    if children_list == []:
+        pass
+        #return None
     else:
-        i = i + 1 # 아닐 때는 인덱스 + 1
-    
-print(len(no_listens_and_sees))
-for no_listen_and_see in no_listens_and_sees:
-    print(no_listen_and_see)
+        for children in children_list:
+            set_node(linked_list, children, now_node)
+        #return node_list
+
+
+N = 8
+linked_list = [[7,4],[2,3],[8,1],[1,4],[6,5],[1,3],[6,4]]
+
+node_classes = [None]
+for node in range(1, N):
+    node_classes.append(Node(node))
+
+
+
+
+set_node(linked_list, 1, None)
+
+for node in range(1, N):
+    print(node_classes[node].node_number)
+    print(node_classes[node].parent_node)
+    print(node_classes[node].children_list)
