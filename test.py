@@ -23,8 +23,6 @@ total_count = 0
 
 def count_step(del_node, parent_node, linked_dic, count):
     global total_count
-
-
     children_list = linked_dic[parent_node]
 
     if (len(children_list) == 1) and (children_list[0] == del_node):
@@ -41,3 +39,5 @@ if total_count %2 == 0:
     print('No')
 else:
     print('Yes')
+    
+print('hello')
