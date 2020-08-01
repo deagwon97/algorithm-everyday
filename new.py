@@ -1,37 +1,62 @@
-import sys
-from sys import stdin, stdout 
+N, new_score, p = [7, 95,10]
+score_list = [95, 80,70,60,50,50,40]
 
-def get_input_make_dic():
-    linked_dic = {}
-    N = int(input())
-    for i in range(1, N+1):
-        linked_dic[i] = []
-    for i in range(N-1):
-        link = list(map(int,sys.stdin.readline().rstrip().split()))
-        linked_dic[link[0]].append(link[1])
-        linked_dic[link[1]].append(link[0])
-    return linked_dic
+#N, new_score, p = [1, 12,10]
+#score_list = [10]
 
-def count_node(now_node, parent_node, count = 0):
-    global total
-    children_list = linked_dic[now_node]
-    if children_list == [parent_node]:
-        total = total + count
+#N, new_score, P = list(map(int, input().split()))
+#score_list = list(map(int, input().split()))
+
+if N == 0:
+    print(1)
+
+elif N == 1:
+    if new_score >= score_list[0]:
+        print(1)
     else:
-        count = count + 1
-        for child in children_list:
-            if child == parent_node:
-                continue
-            else:
-                count_node(child, now_node, count = count)
-
-linked_dic = get_input_make_dic()
-total = 0
-count_node(1, None, count = 0)
-if total % 2 == 0:
-    print('No')
+        print(2)
 else:
-    print('Yes')
+    score_list = sorted(score_list, reverse= True)
+    new_score_loc = N + 1
+    for i  in range(len(score_list)):
+        if i == 0: # i == 0 일 때
+            level = 1
+            if new_score >= score_list[i]:
+                new_score_loc = i + 1
+                break
+            if (len(score_list) == 1) & (new_score < score_list[i]):
+                level = 2
+                new_score_loc = i + 1 
+                break
 
-    
-print('hello')
+        elif i == len(score_list) - 1:
+            ## level 설정
+            if score_list[i-1] > score_list[i]:
+                level = i + 1
+
+            elif score_list[i-1] == score_list[i]:
+                level = level
+
+            # new_level 판단
+            if new_score < score_list[i]:
+                level = N + 1
+
+            elif new_score == score_list[i]:
+                level = level
+        else:
+            if score_list[i -1] > score_list[i]:
+                level = i + 1
+            elif  score_list[i -1] == score_list[i]:
+                pass
+            
+            if new_score > score_list[i+1]:
+                if new_score < score_list[i]:
+                    level = i + 2
+                elif new_score == score_list[i]:
+                    level = level
+                new_score_loc = i + 2
+                break
+    if new_score_loc <= P:
+        print(level)
+    else:
+        print(-1)
