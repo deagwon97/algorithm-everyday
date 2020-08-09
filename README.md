@@ -1,4 +1,4 @@
-# algorithm_everyday
+# algorithm-everyday
 하루 1 알고리즘을 실천하자
 ### 알고리즘 훈련을 기록하는 Reposittory
 
