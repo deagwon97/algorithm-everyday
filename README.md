@@ -1,9 +1,11 @@
-# algorithm-everyday
-하루 1 알고리즘을 실천하자
-### 알고리즘 훈련을 기록하는 Reposittory
+# algorithm
+꾸준히 알고리즘을 공부하자
+
+### 알고리즘
+
+문제풀이, 개념을 기록하는 Reposittory
 
 백준 ID : azaz09112
-
 <기록할 사항>
 1. 문제 번호와 이름
 2. 난이도
